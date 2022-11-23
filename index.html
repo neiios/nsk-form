@@ -11,24 +11,50 @@
 </head>
 
 <body>
-  <form class="main-container">
+  <form id="contact-form" class="main-container">
     <h1>Pagrindinė informacija</h1>
     <div id="general-information">
-      <input type="text" id="firstname" />
-      <input type="text" id="middlename" />
-      <input type="text" id="lastname" />
-      <input type="text" id="asmens-kodas" />
-      <input type="text" id="phone-number" />
-      <input type="text" id="address" />
-      <input type="text" id="email" />
-      <input type="text" id="linkedin" />
-      <input type="text" id="facebook" />
-      <input type="text" id="personal-website-url" />
-      <input type="text" id="other-url" />
+      <label for="firstname">Vardas*</label>
+      <input type="text" id="firstname" required placeholder="Vardenis" />
+
+      <label for="middlename">Antrasis vardas</label>
+      <input type="text" id="middlename" placeholder="DeMarcus" />
+
+      <label for="lastname">Pavardė*</label>
+      <input type="text" id="lastname" required placeholder="Pavardenis" />
+
+      <label for="other-lastname">Ankstesnė pavardė</label>
+      <input type="text" id="other-lastname" placeholder="Jackson" />
+
+      <label for="asmens-kodas">Asmens kodas*</label>
+      <input type="text" id="asmens-kodas" required placeholder="50101001234" />
+
+      <label for="phone-number">Telefono numeris*</label>
+      <input type="text" id="phone-number" required placeholder="+37061033399" />
+
+      <label for="address">Adresas (gyvenamosios vietos)*</label>
+      <input type="text" id="address" required placeholder="Didlaukio g. 47" />
+
+      <label for="email">Elektroninis paštas*</label>
+      <input type="text" id="email" required placeholder="v.pavardenis@mif.stud.vu.lt" />
+
+      <label for="linkedin">LinkedIn</label>
+      <input type="text" id="linkedin" placeholder="v.pavardenis147" />
+
+      <label for="facebook">Facebook</label>
+      <input type="text" id="facebook" placeholder="pavardenis29268" />
+
+      <label for="personal-website-url">Personalinės svetainės nuoroda</label>
+      <input type="text" id="personal-website-url" placeholder="example.com" />
+
+      <label for="other-url">Kitas URL</label>
+      <input type="text" id="other-url" placeholder="vu.lt" />
     </div>
+
     <h1>Išsilavinimas</h1>
     <div id="education">
-      <select name="education-level" id="education-level">
+      <label for="education-level">Išsilavinimo lygis*</label>
+      <select name="education-level" id="education-level" required>
         <option value="pagrindinis">Pagrindinis</option>
         <option value="vidurinis">Vidurinis</option>
         <option value="profesinis">Profesinis</option>
@@ -37,44 +63,43 @@
           Aukštasis-universitetinis
         </option>
       </select>
-      <input type="text" id="last-finished-institution" />
-      <input type="text" id="last-finished-institution-year" />
-      <textarea name="qualifications" id="qualifications" cols="30" rows="10"></textarea>
-      <input type="text" id="degree" />
+
+      <label for="last-finished-institution">Paskutinė užbaigta studijų įstaiga</label>
+      <input type="text" id="last-finished-institution" placeholder="Vilniaus Universitetas" />
+
+      <label for="last-finished-institution">Užbaigimo metai</label>
+      <input type="number" id="last-finished-institution-year" min="1900" max="2099" step="1" placeholder="2000" />
+
+      <label for="qualifications">Kvalifikacija / Laipsnis (išvardyti visus)</label>
+      <input name="qualifications" id="qualifications" placeholder="Magistras"></input>
+
+      <label for="degree">Mokslo laipsnis</label>
+      <input type="text" id="degree" placeholder="Daktaras" />
     </div>
+
     <h1>Šeiminė padėtis</h1>
     <div id="family-status">
-      <select name="marital-status" id="marital-status">
-        <option value="unmarried">Nevedęs/netekėjusi</option>
-        <option value="married">Vedęs/ištekėjusi</option>
-        <option value="divorced">Išsiskyręs(-usi)</option>
-      </select>
-      <!-- only visible if married selected -->
-      <div id="spouse">
-        <input type="text" id="spouse-firstname" />
-        <input type="text" id="spouse-middlename" />
-        <input type="text" id="spouse-lastname" />
+      <div id="marital-container">
+        <label for="marital-status">Vedybinė padėtis*</label>
+        <select onchange="changeMaritalStatus()" name="marital-status" id="marital-status" required>
+          <option value="unmarried">Nevedęs/netekėjusi</option>
+          <option value="married">Vedęs/ištekėjusi</option>
+          <option value="divorced">Išsiskyręs(-usi)</option>
+        </select>
       </div>
-      <!-- only visible if married selected -->
-      <!-- can add as many kids as needed with a button press -->
-      <div id="kids">
-        <div id="kid1">
-          <input type="tex" id="kid1-name" />
-          <input type="tex" id="kid1-lastname" />
-        </div>
-        <div id="kid2">
-          <input type="tex" id="kid2-name" />
-          <input type="tex" id="kid3-lastname" />
-        </div>
-        <!-- button to create new kid elements -->
-        <button id="add-kid">Pridėti vaiką</button>
-      </div>
+
+      <h2>Vaikai</h2>
+      <!-- will contain kids added with a button press -->
+      <div id="kid-container"></div>
+      <button id="add-kid" type="button" onclick="changeKids(this)">Pridėti vaiką</button>
     </div>
+
     <h1>Darbas</h1>
     <div id="work-related">
       <div id="work-status-container">
         <!-- each selected option has its own corresponding element below -->
-        <select name="work-status" id="work-status">
+        <label for="work-status">Profesinė padėtis</label>
+        <select onchange="changeWorkStatus()" name="work-status" id="work-status">
           <option value="studying">Studijuoja</option>
           <option value="works">Dirba</option>
           <option value="not-working">Nedirba</option>
@@ -82,36 +107,24 @@
             Motinystės/tėvystės atostogose
           </option>
         </select>
-        <!-- only one of these can be shown at the same time -->
-        <div id="study-container">
-          <select name="study-degree" id="study-degree">
-            <option value="bachelors">Bakalaurantūra</option>
-            <option value="masters">Magistrantūra</option>
-            <option value="doctoral">Doktorantūra</option>
-          </select>
-          <input type="date" id="study-year" />
-          <input type="text" id="study-institution" />
-        </div>
-        <div id="work-container">
-          <input type="text" id="work-institution" />
-          <input type="text" id="work-functions" />
-        </div>
-        <div id="not-working-container">
-          <input type="text" id="not-working-reason" />
-        </div>
-        <div id="parental-leave-container">
-          <input type="date" id="parental-leave-start-date" />
-        </div>
+
         <!-- end is always shown -->
+        <label for="work-status-end">Tikėtina profesinės padėties pabaiga</label>
         <input type="date" id="work-status-end" />
       </div>
+
+      <label for="years-of-experience">Darbo patirtis (metais)</label>
       <input type="number" id="years-of-experience" />
+
+      <label for="nature-of-work">Darbo pobūdis</label>
       <select name="nature-of-work" id="nature-of-work">
         <option value="executive">Vadovas</option>
         <option value="specialist">Specialistas</option>
         <option value="self-employed">Individuali veikla</option>
       </select>
-      <select name="Darbo sritis" id="work-field" type="text">
+
+      <label for="work-field">Darbo sritis</label>
+      <select name="work-field" id="work-field" type="text">
         <option value="law">Teisė</option>
         <option value="public-sector">Viešasis sektorius</option>
         <option value="health">Sveikatos apsauga</option>
@@ -121,14 +134,14 @@
         <option value="marketing">Prekyba</option>
         <option value="national-defence">Krašto apsauga</option>
         <option value="internal-affairs">Vidaus reikalų sistema</option>
-        <option value="customer-service">
-          Klientų aptarnavimas ir paslaugos
-        </option>
+        <option value="customer-service">Klientų aptarnavimas</option>
         <option value="transport">Transportas</option>
         <option value="entertainment">Kultūra ir pramogos</option>
         <option value="education">Švietimas/Studijos</option>
       </select>
     </div>
+
+    <input type="submit" value="Pateikti" class="submit-button" />
   </form>
 </body>
 

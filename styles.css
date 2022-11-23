@@ -26,20 +26,31 @@ body {
   border-radius: var(--unit);
   background-color: var(--form-background-color);
 
-  padding: var(--unit);
+  padding: 0 var(--unit);
   margin: auto;
 
   max-width: 60rem;
 }
 
-input {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 1rem;
-}
-
 .main-container > * {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--unit);
+}
+
+.submit-button {
+  border-radius: 1rem;
+  font-size: 1rem;
+  padding: 1rem;
+  margin: 2rem auto;
+}
+
+#spouse-info,
+#kids,
+#work-status-container,
+#study-container,
+#work-container,
+#marital-container,
+#not-working-container,
+#parental-leave-container {
+  display: grid;
 }
