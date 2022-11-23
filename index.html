@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontaktinė forma</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <form class="main-container">
+    <h1>Pagrindinė informacija</h1>
+    <div id="general-information">
+      <input type="text" id="firstname" />
+      <input type="text" id="middlename" />
+      <input type="text" id="lastname" />
+      <input type="text" id="asmens-kodas" />
+      <input type="text" id="phone-number" />
+      <input type="text" id="address" />
+      <input type="text" id="email" />
+      <input type="text" id="linkedin" />
+      <input type="text" id="facebook" />
+      <input type="text" id="personal-website-url" />
+      <input type="text" id="other-url" />
+    </div>
+    <h1>Išsilavinimas</h1>
+    <div id="education">
+      <select name="education-level" id="education-level">
+        <option value="pagrindinis">Pagrindinis</option>
+        <option value="vidurinis">Vidurinis</option>
+        <option value="profesinis">Profesinis</option>
+        <option value="aukštasis-kolegijinis">Aukštasis-kolegijinis</option>
+        <option value="aukštasis-universitetinis">
+          Aukštasis-universitetinis
+        </option>
+      </select>
+      <input type="text" id="last-finished-institution" />
+      <input type="text" id="last-finished-institution-year" />
+      <textarea name="qualifications" id="qualifications" cols="30" rows="10"></textarea>
+      <input type="text" id="degree" />
+    </div>
+    <h1>Šeiminė padėtis</h1>
+    <div id="family-status">
+      <select name="marital-status" id="marital-status">
+        <option value="unmarried">Nevedęs/netekėjusi</option>
+        <option value="married">Vedęs/ištekėjusi</option>
+        <option value="divorced">Išsiskyręs(-usi)</option>
+      </select>
+      <!-- only visible if married selected -->
+      <div id="spouse">
+        <input type="text" id="spouse-firstname" />
+        <input type="text" id="spouse-middlename" />
+        <input type="text" id="spouse-lastname" />
+      </div>
+      <!-- only visible if married selected -->
+      <!-- can add as many kids as needed with a button press -->
+      <div id="kids">
+        <div id="kid1">
+          <input type="tex" id="kid1-name" />
+          <input type="tex" id="kid1-lastname" />
+        </div>
+        <div id="kid2">
+          <input type="tex" id="kid2-name" />
+          <input type="tex" id="kid3-lastname" />
+        </div>
+        <!-- button to create new kid elements -->
+        <button id="add-kid">Pridėti vaiką</button>
+      </div>
+    </div>
+    <h1>Darbas</h1>
+    <div id="work-related">
+      <div id="work-status-container">
+        <!-- each selected option has its own corresponding element below -->
+        <select name="work-status" id="work-status">
+          <option value="studying">Studijuoja</option>
+          <option value="works">Dirba</option>
+          <option value="not-working">Nedirba</option>
+          <option value="parental-leave">
+            Motinystės/tėvystės atostogose
+          </option>
+        </select>
+        <!-- only one of these can be shown at the same time -->
+        <div id="study-container">
+          <select name="study-degree" id="study-degree">
+            <option value="bachelors">Bakalaurantūra</option>
+            <option value="masters">Magistrantūra</option>
+            <option value="doctoral">Doktorantūra</option>
+          </select>
+          <input type="date" id="study-year" />
+          <input type="text" id="study-institution" />
+        </div>
+        <div id="work-container">
+          <input type="text" id="work-institution" />
+          <input type="text" id="work-functions" />
+        </div>
+        <div id="not-working-container">
+          <input type="text" id="not-working-reason" />
+        </div>
+        <div id="parental-leave-container">
+          <input type="date" id="parental-leave-start-date" />
+        </div>
+        <!-- end is always shown -->
+        <input type="date" id="work-status-end" />
+      </div>
+      <input type="number" id="years-of-experience" />
+      <select name="nature-of-work" id="nature-of-work">
+        <option value="executive">Vadovas</option>
+        <option value="specialist">Specialistas</option>
+        <option value="self-employed">Individuali veikla</option>
+      </select>
+      <select name="Darbo sritis" id="work-field" type="text">
+        <option value="law">Teisė</option>
+        <option value="public-sector">Viešasis sektorius</option>
+        <option value="health">Sveikatos apsauga</option>
+        <option value="pharmacy">Farmacija</option>
+        <option value="industrial">Pramonė/Gamyba</option>
+        <option value="it">IT</option>
+        <option value="marketing">Prekyba</option>
+        <option value="national-defence">Krašto apsauga</option>
+        <option value="internal-affairs">Vidaus reikalų sistema</option>
+        <option value="customer-service">
+          Klientų aptarnavimas ir paslaugos
+        </option>
+        <option value="transport">Transportas</option>
+        <option value="entertainment">Kultūra ir pramogos</option>
+        <option value="education">Švietimas/Studijos</option>
+      </select>
+    </div>
+  </form>
+</body>
+
+</html>

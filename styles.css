@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --light-text: rgb(236, 236, 236);
+  --page-background-color: #2b2a33;
+  --form-background-color: #2f2c38;
+
+  --small-unit: 1rem;
+  --unit: 2rem;
+  --bigger-unit: 4rem;
+}
+
+body {
+  color: var(--light-text);
+  margin: var(--small-unit);
+  background-color: var(--page-background-color);
+  padding: 0;
+}
+
+.main-container {
+  border: 1px solid black;
+  border-radius: var(--unit);
+  background-color: var(--form-background-color);
+
+  padding: var(--unit);
+  margin: auto;
+
+  max-width: 60rem;
+}
+
+input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 1rem;
+}
+
+.main-container > * {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--unit);
+}
