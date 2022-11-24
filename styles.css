@@ -44,13 +44,22 @@ body {
   margin: 2rem auto;
 }
 
+.kid {
+  border: 1px solid black;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
 #spouse-info,
 #kids,
 #work-status-container,
 #study-container,
-#work-container,
+#works-container,
 #marital-container,
 #not-working-container,
+#education-additional-container,
+.kid,
 #parental-leave-container {
   display: grid;
 }
