@@ -1,20 +1,60 @@
 const form = document.getElementById("contact-form");
-const familyStatus = document.getElementById("family-status");
+form.addEventListener("submit", submissionHandler);
 
-// data from a form
-const data = {};
+function extractInfoFromAsmensKodas(obj) {
+  let year = obj.asmensKodas.slice(1, 3);
+  let month = obj.asmensKodas.slice(3, 5);
+  let day = obj.asmensKodas.slice(5, 7);
+  let firstNumber = obj.asmensKodas.slice(0, 1);
 
-function checkValidity() {
-  return true;
+  let gender;
+  switch (firstNumber) {
+    case "1":
+      gender = "M";
+      year = "18" + year;
+      break;
+    case "2":
+      gender = "F";
+      year = "18" + year;
+      break;
+    case "3":
+      gender = "M";
+      year = "19" + year;
+      break;
+    case "4":
+      gender = "F";
+      year = "19" + year;
+      break;
+    case "5":
+      gender = "M";
+      year = "20" + year;
+      break;
+    case "6":
+      gender = "F";
+      year = "20" + year;
+      break;
+  }
+  obj.dataOfBirth = year + "-" + month + "-" + day;
+  obj.gender = gender;
 }
 
 function submissionHandler(e) {
   // prevent default form behavior
   e.preventDefault();
-  const valid = checkValidity;
-  if (valid) {
-    console.log("Form is valid.");
-  }
+  // extract data from a form
+  const formData = new FormData(e.target);
+  const obj = Object.fromEntries(formData.entries());
+  // Object.keys(obj).forEach((key) => {
+  //   if (obj[key] === "") delete obj[key];
+  // });
+  extractInfoFromAsmensKodas(obj);
+  console.log(obj);
+
+  // output collected data
+  document.getElementById("contact-form").remove();
+  const pre = document.createElement("pre");
+  pre.textContent = JSON.stringify(obj, undefined, 2);
+  document.body.appendChild(pre);
 }
 
 function changeMaritalStatus() {
@@ -30,13 +70,13 @@ function changeMaritalStatus() {
     div.id = "spouse-info";
     div.innerHTML = `
           <label for="spouse-firstname">Sutuoktinio(-ės) vardas*</label>
-          <input type="text" id="spouse-firstname" required placeholder="Vardenis" />
+          <input type="text" name="spouseFirstname" id="spouse-firstname" required placeholder="Vardenis" />
 
           <label for="spouse-middlename">Sutuoktinio(-ės) antrasis vardas</label>
-          <input type="text" id="spouse-middlename" placeholder="DeMarcus" />
+          <input type="text" name="spouseMiddlename" id="spouse-middlename" placeholder="DeMarcus" />
 
           <label for="spouse-lastname">Sutuoktinio(-ės) pavardė*</label>
-          <input type="text" id="spouse-lastname" required placeholder="Pavardenis" />
+          <input type="text" name="spouseLastname" id="spouse-lastname" required placeholder="Pavardenis" />
   `;
     container.appendChild(div);
   }
@@ -51,9 +91,9 @@ function changeKids(button) {
     div.classList.add("kid");
     div.innerHTML = `
           <label for="${div.id}-name">Vaiko vardas</label>
-          <input type="text" id="${div.id}-name" required />
+          <input type="text" name="${div.id}Name" id="${div.id}-name" required />
           <label for="${div.id}-lastname">Vaiko pavardė</label>
-          <input type="text" id="${div.id}-lastname" required />
+          <input type="text" name="${div.id}Lastname" id="${div.id}-lastname" required />
           <button id="kill-kid" type="button" onclick="changeKids(this)">Ištrinti</button>
 `;
     container.appendChild(div);
@@ -79,10 +119,10 @@ function changeEducation() {
     div.id = "education-additional-container";
     div.innerHTML = `
           <label for="qualifications">Kvalifikacija / Laipsnis (išvardyti visus)*</label>
-          <input name="qualifications" required id="qualifications" placeholder="Magistras"></input>
+          <input type="text" name="qualifications" required id="qualifications" placeholder="Magistras"></input>
 
           <label for="degree">Mokslo laipsnis</label>
-          <input type="text" id="degree" placeholder="Daktaras" />
+          <input type="text" name="degree" id="degree" placeholder="Daktaras" />
   `;
     container.appendChild(div);
   }
@@ -108,17 +148,17 @@ function changeWorkStatus() {
     div.id = "study-container";
     div.innerHTML = `
           <label for="study-degree">Studijų pakopa</label>
-          <select name="study-degree" id="study-degree">
+          <select name="studyDegree" id="study-degree">
             <option value="bachelors">Bakalaurantūra</option>
             <option value="masters">Magistrantūra</option>
             <option value="doctoral">Doktorantūra</option>
           </select>
 
-          <label for="study-year">Kursas</label>
-          <input type="number" id="study-year" />
+          <label for="study-year">Kursas*</label>
+          <input type="number" name="studyYear" id="study-year" required max="4" min="1" step="1" placeholder="1"/>
 
-          <label for="study-institution">Įstaiga</label>
-          <input type="text" id="study-institution" />
+          <label for="study-institution">Įstaiga*</label>
+          <input type="text" name="studyInstitution" id="study-institution" required placeholder="Vilniaus Universitetas"/>
   `;
     container.appendChild(div);
   } else if (select.value === "works" || select.value === "parental-leave") {
@@ -127,18 +167,18 @@ function changeWorkStatus() {
     if (select.value === "parental-leave") {
       div.innerHTML = `
           <label for="parental-leave-start-date">Atostogų pradžia</label>
-          <input type="date" id="parental-leave-start-date" />
+          <input type="date" name="parentalLeaveStartDate" id="parental-leave-start-date" />
   `;
     }
     div.innerHTML += `
           <label for="work-institution">Darbo įstaiga*</label>
-          <input type="text" id="work-institution" required />
+          <input type="text" name="workInstitution" id="work-institution" required />
 
           <label for="work-functions">Darbo pareigos*</label>
-          <input type="text" id="work-functions" required/>
+          <input type="text" name="workFunctions" id="work-functions" required/>
 
           <label for="years-of-experience">Darbo patirtis (metais)*</label>
-          <input type="number" id="years-of-experience" required/>
+          <input type="number" name="yearsOfExperience" id="years-of-experience" required/>
 
           <label for="nature-of-work">Darbo pobūdis*</label>
           <select name="nature-of-work" id="nature-of-work" required>
@@ -166,7 +206,7 @@ function changeWorkStatus() {
         </div>
 
         <label for="work-status-end">Tikėtina profesinės padėties pabaiga*</label>
-        <input type="date" id="work-status-end" required/>
+        <input type="date" name="workStatusEnd" id="work-status-end" required/>
   `;
     container.appendChild(div);
   } else if (select.value === "not-working") {
@@ -174,13 +214,12 @@ function changeWorkStatus() {
     div.id = "not-working-container";
     div.innerHTML = `
           <label for="not-working-reason">Nedarbo priežastis</label>
-          <input type="text" id="not-working-reason" />
+          <input type="text" name="notWorkingReason" id="not-working-reason" />
   `;
     container.appendChild(div);
   }
 }
 
-form.addEventListener("submit", submissionHandler);
 // run it to change the default value
 changeWorkStatus();
 changeMaritalStatus();
