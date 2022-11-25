@@ -66,6 +66,7 @@ body {
 #parental-leave-start-container,
 #education-additional-container,
 .kid,
+#position-container,
 .page > *,
 #parental-leave-container {
   display: grid;
@@ -129,18 +130,21 @@ input:invalid {
 }
 
 .submit-buttom {
-  border: 2px solid grey !important;
+  border: 2px solid grey;
 }
 
 @media (min-width: 700px) {
   .form-container,
   #education-additional-container,
+  #position-container,
   #kid-container {
     grid-template-columns: 1fr 1fr;
   }
 
   #education-additional-container,
   #marital-container,
+  #position-container,
+  #work-status-container,
   .kids-section-container {
     grid-column: span 2;
   }

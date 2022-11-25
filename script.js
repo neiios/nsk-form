@@ -12,7 +12,6 @@ function submissionHandler(e) {
   const kidCount = document.getElementById("kid-container").children.length;
   obj.kidCount = kidCount;
   // output collected data
-  console.log(obj);
   document.getElementById("contact-form").remove();
   const pre = document.createElement("pre");
   pre.textContent = JSON.stringify(obj, undefined, 2);
@@ -84,7 +83,7 @@ function extractInfoFromAsmensKodas(obj) {
   let day = obj.asmensKodas.slice(5, 7);
   let gender;
   [year, gender] = setAsmensKodasYearAndGender(obj.asmensKodas, year, gender);
-  obj.dataOfBirth = year + "-" + month + "-" + day;
+  obj.dateOfBirth = year + "-" + month + "-" + day;
   obj.gender = gender;
 
   if ("spouseAsmensKodas" in obj) {
@@ -157,16 +156,33 @@ function changeEducation() {
     div.id = "education-additional-container";
     div.innerHTML = `
           <label for="academic-degree">Studijų pakopa*</label>
-          <select name="academicDegree" id="academic-degree" required>
+          <select onchange="changePosition()" name="academicDegree" id="academic-degree" required>
             <option value="bakalauras">Bakalauras</option>
             <option value="magistras">Magistras</option>
             <option value="daktaras">Daktaras</option>
-            <option value="daktaras">Habilituotas daktaras</option>
+            <option value="habilituotas-daktaras">Habilituotas daktaras</option>
           </select>
-
-          <label for="position">Pareigos</label>
-          <input type="text" name="position" id="position" placeholder="Mokslo darbuotojas" />
   `;
+    container.appendChild(div);
+  }
+}
+
+function changePosition() {
+  if (document.getElementById("position-container")) {
+    document.getElementById("position-container").remove();
+  }
+
+  if (document.getElementById("academic-degree") === null) return;
+
+  let select = document.getElementById("academic-degree");
+  if (select.value === "daktaras" || select.value === "habilituotas-daktaras") {
+    let container = document.getElementById("education-additional-container");
+    let div = document.createElement("div");
+    div.id = "position-container";
+    div.innerHTML = `
+          <label for="position" id="position-label" >Pareigos</label>
+          <input type="text" name="position" id="position" required placeholder="Mokslo darbuotojas" />
+`;
     container.appendChild(div);
   }
 }
@@ -182,7 +198,7 @@ function changeParentalLeave() {
   div.id = "parental-leave-start-container";
   div.innerHTML = `
           <label for="parental-leave-start-date">Atostogų pradžia</label>
-          <input type="date" name="parentalLeaveStartDate" id="parental-leave-start-date" />
+          <input type="date" required name="parentalLeaveStartDate" id="parental-leave-start-date" />
   `;
   container.appendChild(div);
 }
@@ -328,3 +344,4 @@ createPages();
 changeWorkStatus();
 changeMaritalStatus();
 changeEducation();
+changePosition();
