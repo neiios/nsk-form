@@ -1,5 +1,5 @@
 const form = document.getElementById("contact-form");
-form.addEventListener("submit", submissionHandler);
+let currentPage = 0;
 
 function extractInfoFromAsmensKodas(obj) {
   let year = obj.asmensKodas.slice(1, 3);
@@ -108,18 +108,29 @@ function changeEducation() {
   let container = document.getElementById("education");
   let select = document.getElementById("education-level");
 
-  if (
-    select.value === "aukstasis-kolegijinis" ||
-    select.value === "aukstasis-universitetinis"
-  ) {
+  if (select.value === "aukstasis-kolegijinis") {
     let div = document.createElement("div");
     div.id = "education-additional-container";
     div.innerHTML = `
-          <label for="qualifications">Kvalifikacija / Laipsnis (išvardyti visus)*</label>
-          <input type="text" name="qualifications" required id="qualifications" placeholder="Magistras"></input>
+          <label for="qualifications">Laipsnis</label>
+          <select name="qualifications" id="qualifications" required>
+            <option value="profesinis-bakalauras">Profesinis bakalauras</option>
+          </select>
+  `;
+    container.appendChild(div);
+  } else if (select.value === "aukstasis-universitetinis") {
+    let div = document.createElement("div");
+    div.id = "education-additional-container";
+    div.innerHTML = `
+          <label for="qualifications">Laipsnis</label>
+          <select name="qualifications" id="qualifications" required>
+            <option value="bakalauras">Bakalauras</option>
+            <option value="magistras">Magistras</option>
+            <option value="daktaras">Daktaras</option>
+          </select>
 
           <label for="degree">Mokslo laipsnis</label>
-          <input type="text" name="degree" id="degree" placeholder="Daktaras" />
+          <input type="text" name="degree" id="degree" placeholder="Mokslų daktaras" />
   `;
     container.appendChild(div);
   }
@@ -139,8 +150,6 @@ function changeParentalLeave() {
           <input type="date" name="parentalLeaveStartDate" id="parental-leave-start-date" />
   `;
   container.appendChild(div);
-
-  console.log("parental leave status change");
 }
 
 function changeWorkStatus() {
@@ -234,7 +243,51 @@ function changeWorkStatus() {
   }
 }
 
+function createPages() {
+  [...form.children].forEach((page) => {
+    let div = document.createElement("div");
+    if (page.querySelector("#work-related") != null) {
+      div.innerHTML = `
+          <button type="button" onclick="previousPage()">Atgal</button>
+          <input type="submit" value="Pateikti" class="submit-button" />
+  `;
+    } else if (page.querySelector("#general-information") != null) {
+      div.innerHTML = `
+          <button type="button" onclick="nextPage()">Kitas puslapis</button>
+  `;
+    } else {
+      div.innerHTML = `
+          <button type="button" onclick="previousPage()">Atgal</button>
+          <button type="button" onclick="nextPage()">Kitas puslapis</button>
+  `;
+    }
+    page.appendChild(div);
+  });
+  updatePages();
+}
+
+function updatePages() {
+  for (let i = 0; i < form.children.length; i++) {
+    form.children[i].classList.add("hidden");
+    if (i === currentPage) {
+      form.children[i].classList.remove("hidden");
+    }
+  }
+}
+
+function previousPage() {
+  currentPage--;
+  updatePages();
+}
+
+function nextPage() {
+  currentPage++;
+  updatePages();
+}
+
 // run it to change the default value
+form.addEventListener("submit", submissionHandler);
+createPages();
 changeWorkStatus();
 changeMaritalStatus();
 changeEducation();

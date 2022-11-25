@@ -26,7 +26,7 @@ body {
   border-radius: var(--unit);
   background-color: var(--form-background-color);
 
-  padding: 0 var(--unit);
+  padding: var(--unit);
   margin: auto;
 
   max-width: 60rem;
@@ -35,13 +35,6 @@ body {
 .main-container > * {
   display: grid;
   grid-template-columns: 1fr;
-}
-
-.submit-button {
-  border-radius: 1rem;
-  font-size: 1rem;
-  padding: 1rem;
-  margin: 2rem auto;
 }
 
 .kid {
@@ -61,6 +54,12 @@ body {
 #parental-leave-start-container,
 #education-additional-container,
 .kid,
+.page,
+.page > *,
 #parental-leave-container {
   display: grid;
+}
+
+.hidden {
+  display: none;
 }
