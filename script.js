@@ -44,13 +44,10 @@ function submissionHandler(e) {
   // extract data from a form
   const formData = new FormData(e.target);
   const obj = Object.fromEntries(formData.entries());
-  // Object.keys(obj).forEach((key) => {
-  //   if (obj[key] === "") delete obj[key];
-  // });
   extractInfoFromAsmensKodas(obj);
-  console.log(obj);
 
   // output collected data
+  console.log(obj);
   document.getElementById("contact-form").remove();
   const pre = document.createElement("pre");
   pre.textContent = JSON.stringify(obj, undefined, 2);
@@ -128,6 +125,24 @@ function changeEducation() {
   }
 }
 
+function changeParentalLeave() {
+  if (document.getElementById("parental-leave-start-container")) {
+    document.getElementById("parental-leave-start-container").remove();
+    return;
+  }
+
+  let container = document.getElementById("parental-leave-container");
+  let div = document.createElement("div");
+  div.id = "parental-leave-start-container";
+  div.innerHTML = `
+          <label for="parental-leave-start-date">Atostogų pradžia</label>
+          <input type="date" name="parentalLeaveStartDate" id="parental-leave-start-date" />
+  `;
+  container.appendChild(div);
+
+  console.log("parental leave status change");
+}
+
 function changeWorkStatus() {
   if (document.getElementById("study-container")) {
     document.getElementById("study-container").remove();
@@ -161,16 +176,10 @@ function changeWorkStatus() {
           <input type="text" name="studyInstitution" id="study-institution" required placeholder="Vilniaus Universitetas"/>
   `;
     container.appendChild(div);
-  } else if (select.value === "works" || select.value === "parental-leave") {
+  } else if (select.value === "works") {
     let div = document.createElement("div");
     div.id = "works-container";
-    if (select.value === "parental-leave") {
-      div.innerHTML = `
-          <label for="parental-leave-start-date">Atostogų pradžia</label>
-          <input type="date" name="parentalLeaveStartDate" id="parental-leave-start-date" />
-  `;
-    }
-    div.innerHTML += `
+    div.innerHTML = `
           <label for="work-institution">Darbo įstaiga*</label>
           <input type="text" name="workInstitution" id="work-institution" required />
 
@@ -178,7 +187,7 @@ function changeWorkStatus() {
           <input type="text" name="workFunctions" id="work-functions" required/>
 
           <label for="years-of-experience">Darbo patirtis (metais)*</label>
-          <input type="number" name="yearsOfExperience" id="years-of-experience" required/>
+          <input type="number" name="yearsOfExperience" min="0" max="100" step="1" id="years-of-experience" required/>
 
           <label for="nature-of-work">Darbo pobūdis*</label>
           <select name="nature-of-work" id="nature-of-work" required>
@@ -203,6 +212,11 @@ function changeWorkStatus() {
             <option value="entertainment">Kultūra ir pramogos</option>
             <option value="education">Švietimas/Studijos</option>
           </select>
+        </div>
+
+        <div id="parental-leave-container">
+          <label for="parental-leave-status">Esate motinystės/tėvystės atostogose</input>
+          <input onchange="changeParentalLeave()" id="parental-leave-status" name="parentalLeaveStatus" type="checkbox" value="true" required/>
         </div>
 
         <label for="work-status-end">Tikėtina profesinės padėties pabaiga*</label>
