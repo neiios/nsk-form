@@ -22,14 +22,16 @@ body {
 }
 
 .main-container {
+  display: grid;
+
   border: 1px solid black;
-  border-radius: var(--unit);
   background-color: var(--form-background-color);
 
   padding: var(--unit);
   margin: auto;
 
   max-width: 60rem;
+  min-height: 40rem;
 }
 
 .main-container > * {
@@ -37,11 +39,20 @@ body {
   grid-template-columns: 1fr;
 }
 
+#add-kid {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
 .kid {
   border: 1px solid black;
-  margin-bottom: 1rem;
   padding: 1rem;
-  border-radius: 8px;
+}
+
+#kid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
 #spouse-info,
@@ -54,10 +65,55 @@ body {
 #parental-leave-start-container,
 #education-additional-container,
 .kid,
-.page,
 .page > *,
 #parental-leave-container {
   display: grid;
+}
+
+.kid > button {
+  margin-top: 2rem;
+}
+
+.page-control-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info > * {
+  display: grid;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.page-control-container {
+  justify-self: flex-end;
+}
+
+input,
+button,
+select {
+  border: 2px solid grey;
+  margin-bottom: 1rem;
+}
+
+input:required {
+  border: 2px solid green;
+}
+
+input:invalid {
+  border: 2px solid red;
 }
 
 .hidden {

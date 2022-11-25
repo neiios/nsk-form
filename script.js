@@ -91,10 +91,10 @@ function changeKids(button) {
           <input type="text" name="${div.id}Name" id="${div.id}-name" required />
           <label for="${div.id}-lastname">Vaiko pavardė</label>
           <input type="text" name="${div.id}Lastname" id="${div.id}-lastname" required />
-          <button id="kill-kid" type="button" onclick="changeKids(this)">Ištrinti</button>
+          <button type="button" class="kill-kid" onclick="changeKids(this)">Ištrinti</button>
 `;
     container.appendChild(div);
-  } else if (button.id === "kill-kid") {
+  } else if (button.classList.contains("kill-kid")) {
     const el = button.parentElement;
     el.remove();
   }
@@ -246,6 +246,7 @@ function changeWorkStatus() {
 function createPages() {
   [...form.children].forEach((page) => {
     let div = document.createElement("div");
+    div.classList.add("page-control-container");
     if (page.querySelector("#work-related") != null) {
       div.innerHTML = `
           <button type="button" onclick="previousPage()">Atgal</button>
@@ -253,6 +254,7 @@ function createPages() {
   `;
     } else if (page.querySelector("#general-information") != null) {
       div.innerHTML = `
+          <button type="button" disabled>Atgal</button>
           <button type="button" onclick="nextPage()">Kitas puslapis</button>
   `;
     } else {

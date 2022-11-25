@@ -13,97 +13,106 @@
 <body>
   <form id="contact-form" class="main-container">
     <div class="page hidden">
-      <h1>Pagrindinė informacija</h1>
-      <div id="general-information">
-        <label for="firstname">Vardas*</label>
-        <input type="text" name="firstname" id="firstname" required placeholder="Vardenis" />
-        <label for="middlename">Antrasis vardas</label>
-        <input type="text" name="middlename" id="middlename" placeholder="DeMarcus" />
-        <label for="lastname">Pavardė*</label>
-        <input type="text" name="lastname" id="lastname" required placeholder="Pavardenis" />
-        <label for="other-lastname">Ankstesnė pavardė</label>
-        <input type="text" name="otherLastname" id="other-lastname" placeholder="Jackson" />
-        <label for="asmens-kodas">Asmens kodas*</label>
-        <input type="text" pattern="^[12345]\d{2}(1[012]|0[123456789])(3[01]|[012][123456789])\d{4}$" name="asmensKodas"
-          id="asmens-kodas" required placeholder="50101011234" />
-        <label for="address">Adresas (gyvenamosios vietos)*</label>
-        <input type="text" name="address" id="address" required placeholder="Didlaukio g. 47" />
-      </div>
-    </div>
-
-    <div class="page hidden">
-      <h1>Kontaktinė informacija</h1>
-      <div id="contact-information">
-        <label for="phone-number">Telefono numeris*</label>
-        <input type="text" pattern="^(86|\+?3706)\d{7}$" name="phoneNumber" id="phone-number" required
-          placeholder="+37061033399" />
-        <label for="email">Elektroninis paštas*</label>
-        <input type="email" name="email" id="email" required placeholder="v.pavardenis@mif.stud.vu.lt" />
-        <label for="linkedin">LinkedIn</label>
-        <input type="text" name="linkedin" id="linkedin" placeholder="v.pavardenis147" />
-        <label for="facebook">Facebook</label>
-        <input type="text" name="facebook" id="facebook" placeholder="pavardenis29268" />
-        <label for="personal-website-url">Personalinės svetainės nuoroda</label>
-        <input type="text"
-          pattern="(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)"
-          name="personalWebsiteUrl" id="personal-website-url" placeholder="example.com" />
-        <label for="other-url">Kitas URL</label>
-        <input type="text"
-          pattern="(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)"
-          name="otherUrl" id="other-url" placeholder="vu.lt" />
-      </div>
-
-    </div>
-
-    <div class="page hidden">
-      <h1>Išsilavinimas</h1>
-      <div id="education">
-        <label for="education-level">Išsilavinimo lygis*</label>
-        <select onchange="changeEducation()" name="educationLevel" id="education-level" required>
-          <option value="pagrindinis">Pagrindinis</option>
-          <option value="vidurinis">Vidurinis</option>
-          <option value="profesinis">Profesinis</option>
-          <option value="aukstasis-kolegijinis">Aukštasis-kolegijinis</option>
-          <option value="aukstasis-universitetinis">
-            Aukštasis-universitetinis
-          </option>
-        </select>
-        <label for="lastFinishedInstitution">Paskutinė užbaigta studijų įstaiga*</label>
-        <input type="text" name="lastFinishedInstitution" id="lastFinishedInstitution"
-          placeholder="Vilniaus Universitetas" required />
-        <label for="lastFinishedInstitutionYear">Užbaigimo metai*</label>
-        <input type="number" name="lastFinishedInstitutionYear" id="lastFinishedInstitutionYear" required min="1900"
-          max="2022" step="1" placeholder="2000" />
-      </div>
-    </div>
-
-    <div class="page hidden">
-      <h1>Šeiminė padėtis</h1>
-      <div id="family-status">
-        <div id="marital-container">
-          <label for="marital-status">Vedybinė padėtis*</label>
-          <select onchange="changeMaritalStatus()" name="maritalStatus" id="marital-status" required>
-            <option value="unmarried">Nevedęs/netekėjusi</option>
-            <option value="married">Vedęs/ištekėjusi</option>
-            <option value="divorced">Išsiskyręs(-usi)</option>
-          </select>
+      <div class="info">
+        <h1>Pagrindinė informacija</h1>
+        <div id="general-information">
+          <label for="firstname">Vardas*</label>
+          <input type="text" name="firstname" id="firstname" required placeholder="Vardenis" />
+          <label for="middlename">Antrasis vardas</label>
+          <input type="text" name="middlename" id="middlename" placeholder="DeMarcus" />
+          <label for="lastname">Pavardė*</label>
+          <input type="text" name="lastname" id="lastname" required placeholder="Pavardenis" />
+          <label for="other-lastname">Ankstesnė pavardė</label>
+          <input type="text" name="otherLastname" id="other-lastname" placeholder="Jackson" />
+          <label for="asmens-kodas">Asmens kodas*</label>
+          <input type="text" pattern="^[12345]\d{2}(1[012]|0[123456789])(3[01]|[012][123456789])\d{4}$"
+            name="asmensKodas" id="asmens-kodas" required placeholder="50101011234" />
+          <label for="address">Adresas</label>
+          <input type="text" name="address" id="address" required placeholder="Didlaukio g. 47" />
         </div>
-        <h2>Vaikai</h2>
-        <div id="kid-container"></div>
-        <button id="add-kid" type="button" onclick="changeKids(this)">Pridėti</button>
       </div>
     </div>
 
     <div class="page hidden">
-      <h1>Darbas</h1>
-      <div id="work-related">
-        <div id="work-status-container">
-          <label for="work-status">Profesinė padėtis</label>
-          <select onchange="changeWorkStatus()" name="workStatus" id="work-status">
-            <option value="studying">Studijuoja</option>
-            <option value="works">Dirba</option>
-            <option value="not-working">Nedirba</option>
+      <div class="info">
+        <h1>Kontaktinė informacija</h1>
+        <div id="contact-information">
+          <label for="phone-number">Telefono numeris*</label>
+          <input type="text" pattern="^(86|\+?3706)\d{7}$" name="phoneNumber" id="phone-number" required
+            placeholder="+37061033399" />
+          <label for="email">Elektroninis paštas*</label>
+          <input type="email" name="email" id="email" required placeholder="v.pavardenis@mif.stud.vu.lt" />
+          <label for="linkedin">LinkedIn</label>
+          <input type="text" name="linkedin" id="linkedin" placeholder="v.pavardenis147" />
+          <label for="facebook">Facebook</label>
+          <input type="text" name="facebook" id="facebook" placeholder="pavardenis29268" />
+          <label for="personal-website-url">Personalinės svetainės nuoroda</label>
+          <input type="text"
+            pattern="(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)"
+            name="personalWebsiteUrl" id="personal-website-url" placeholder="example.com" />
+          <label for="other-url">Kitas URL</label>
+          <input type="text"
+            pattern="(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)"
+            name="otherUrl" id="other-url" placeholder="vu.lt" />
+        </div>
+      </div>
+    </div>
+
+    <div class="page hidden">
+      <div class="info">
+        <h1>Išsilavinimas</h1>
+        <div id="education">
+          <label for="education-level">Išsilavinimo lygis*</label>
+          <select onchange="changeEducation()" name="educationLevel" id="education-level" required>
+            <option value="pagrindinis">Pagrindinis</option>
+            <option value="vidurinis">Vidurinis</option>
+            <option value="profesinis">Profesinis</option>
+            <option value="aukstasis-kolegijinis">Aukštasis-kolegijinis</option>
+            <option value="aukstasis-universitetinis">
+              Aukštasis-universitetinis
+            </option>
           </select>
+          <label for="lastFinishedInstitution">Paskutinė užbaigta studijų įstaiga*</label>
+          <input type="text" name="lastFinishedInstitution" id="lastFinishedInstitution"
+            placeholder="Vilniaus Universitetas" required />
+          <label for="lastFinishedInstitutionYear">Užbaigimo metai*</label>
+          <input type="number" name="lastFinishedInstitutionYear" id="lastFinishedInstitutionYear" required min="1900"
+            max="2022" step="1" placeholder="2000" />
+        </div>
+      </div>
+    </div>
+
+    <div class="page hidden">
+      <div class="info">
+        <h1>Šeiminė padėtis</h1>
+        <div id="family-status">
+          <div id="marital-container">
+            <label for="marital-status">Vedybinė padėtis*</label>
+            <select onchange="changeMaritalStatus()" name="maritalStatus" id="marital-status" required>
+              <option value="unmarried">Nevedęs/netekėjusi</option>
+              <option value="married">Vedęs/ištekėjusi</option>
+              <option value="divorced">Išsiskyręs(-usi)</option>
+            </select>
+          </div>
+          <h2>Vaikai</h2>
+          <div id="kid-container"></div>
+          <button id="add-kid" type="button" onclick="changeKids(this)">Pridėti</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page hidden">
+      <div class="info">
+        <h1>Darbas</h1>
+        <div id="work-related">
+          <div id="work-status-container">
+            <label for="work-status">Profesinė padėtis</label>
+            <select onchange="changeWorkStatus()" name="workStatus" id="work-status">
+              <option value="studying">Studijuoja</option>
+              <option value="works">Dirba</option>
+              <option value="not-working">Nedirba</option>
+            </select>
+          </div>
         </div>
       </div>
   </form>
