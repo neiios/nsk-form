@@ -15,6 +15,7 @@
 }
 
 body {
+  font-size: 1rem;
   color: black;
   margin: var(--small-unit);
   background-color: white;
@@ -31,7 +32,7 @@ body {
   margin: auto;
 
   max-width: 60rem;
-  min-height: 40rem;
+  min-height: 47rem;
 }
 
 .main-container > * {
@@ -106,13 +107,16 @@ button,
 select {
   border: 2px solid grey;
   margin-bottom: 1rem;
+  font-size: 1rem;
 }
 
-input:valid {
+input:valid,
+select:valid {
   border: 2px solid green;
 }
 
-input:placeholder-shown {
+input:placeholder-shown,
+select:placeholder-shown {
   border: 2px solid grey;
 }
 

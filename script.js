@@ -1,43 +1,6 @@
 const form = document.getElementById("contact-form");
 let currentPage = 0;
 
-function extractInfoFromAsmensKodas(obj) {
-  let year = obj.asmensKodas.slice(1, 3);
-  let month = obj.asmensKodas.slice(3, 5);
-  let day = obj.asmensKodas.slice(5, 7);
-  let firstNumber = obj.asmensKodas.slice(0, 1);
-
-  let gender;
-  switch (firstNumber) {
-    case "1":
-      gender = "M";
-      year = "18" + year;
-      break;
-    case "2":
-      gender = "F";
-      year = "18" + year;
-      break;
-    case "3":
-      gender = "M";
-      year = "19" + year;
-      break;
-    case "4":
-      gender = "F";
-      year = "19" + year;
-      break;
-    case "5":
-      gender = "M";
-      year = "20" + year;
-      break;
-    case "6":
-      gender = "F";
-      year = "20" + year;
-      break;
-  }
-  obj.dataOfBirth = year + "-" + month + "-" + day;
-  obj.gender = gender;
-}
-
 function submissionHandler(e) {
   // prevent default form behavior
   e.preventDefault();
@@ -45,7 +8,9 @@ function submissionHandler(e) {
   const formData = new FormData(e.target);
   const obj = Object.fromEntries(formData.entries());
   extractInfoFromAsmensKodas(obj);
-
+  // extract number of kids
+  const kidCount = document.getElementById("kid-container").children.length;
+  obj.kidCount = kidCount;
   // output collected data
   console.log(obj);
   document.getElementById("contact-form").remove();
@@ -74,8 +39,65 @@ function changeMaritalStatus() {
 
           <label for="spouse-lastname">Sutuoktinio(-ės) pavardė*</label>
           <input type="text" name="spouseLastname" id="spouse-lastname" required placeholder="Pavardenis" />
+
+          <label for="spouse-lastname">Sutuoktinio(-ės) asmens kodas*</label>
+          <input type="text" pattern='^[12345][0-9]{2}(1[012]|0[123456789])(3[01]|[012][123456789])[0-9]{4}$' name="spouseAsmensKodas" id="spouse-asmens-kodas" required placeholder="50101011234" />
   `;
     container.appendChild(div);
+  }
+}
+
+function setAsmensKodasYearAndGender(asmensKodas, year, gender) {
+  let firstNumber = asmensKodas.slice(0, 1);
+  switch (firstNumber) {
+    case "1":
+      gender = "M";
+      year = "18" + year;
+      break;
+    case "2":
+      gender = "F";
+      year = "18" + year;
+      break;
+    case "3":
+      gender = "M";
+      year = "19" + year;
+      break;
+    case "4":
+      gender = "F";
+      year = "19" + year;
+      break;
+    case "5":
+      gender = "M";
+      year = "20" + year;
+      break;
+    case "6":
+      gender = "F";
+      year = "20" + year;
+      break;
+  }
+  return [year, gender];
+}
+
+function extractInfoFromAsmensKodas(obj) {
+  let year = obj.asmensKodas.slice(1, 3);
+  let month = obj.asmensKodas.slice(3, 5);
+  let day = obj.asmensKodas.slice(5, 7);
+  let gender;
+  [year, gender] = setAsmensKodasYearAndGender(obj.asmensKodas, year, gender);
+  obj.dataOfBirth = year + "-" + month + "-" + day;
+  obj.gender = gender;
+
+  if ("spouseAsmensKodas" in obj) {
+    year = obj.spouseAsmensKodas.slice(1, 3);
+    month = obj.spouseAsmensKodas.slice(3, 5);
+    day = obj.spouseAsmensKodas.slice(5, 7);
+    [year, gender] = setAsmensKodasYearAndGender(
+      obj.spouseAsmensKodas,
+      year,
+      gender
+    );
+    obj.spouseDataOfBirth = year + "-" + month + "-" + day;
+    obj.spouseGender = gender;
   }
 }
 
@@ -84,12 +106,12 @@ function changeKids(button) {
 
   if (button.id === "add-kid") {
     let div = document.createElement("div");
-    div.id = "kid" + container.children.length;
     div.classList.add("kid");
+    div.id = "kid" + container.children.length;
     div.innerHTML = `
-          <label for="${div.id}-name">Vaiko vardas</label>
+          <label for="${div.id}-name">Vaiko vardas*</label>
           <input type="text" name="${div.id}Name" placeholder="James" id="${div.id}-name" required />
-          <label for="${div.id}-lastname">Vaiko pavardė</label>
+          <label for="${div.id}-lastname">Vaiko pavardė*</label>
           <input type="text" name="${div.id}Lastname" placeholder="Jameson" id="${div.id}-lastname" required />
           <div> 
             <button type="button" class="kill-kid" onclick="changeKids(this)">Ištrinti</button>
@@ -99,6 +121,16 @@ function changeKids(button) {
   } else if (button.classList.contains("kill-kid")) {
     const el = button.parentElement.parentElement;
     el.remove();
+    // and change names and id
+    for (let i = 0; i < container.children.length; i++) {
+      container.children[i].id = "kid" + i;
+      container.children[i].children[0].setAttribute("for", `kid${i}-name`);
+      container.children[i].children[1].id = `kid${i}-name`;
+      container.children[i].children[1].name = `kid${i}Name`;
+      container.children[i].children[2].setAttribute("for", `kid${i}-lastname`);
+      container.children[i].children[3].id = `kid${i}-lastname`;
+      container.children[i].children[3].name = `kid${i}Lastname`;
+    }
   }
 }
 
@@ -114,8 +146,8 @@ function changeEducation() {
     let div = document.createElement("div");
     div.id = "education-additional-container";
     div.innerHTML = `
-          <label for="qualifications">Laipsnis</label>
-          <select name="qualifications" id="qualifications" required>
+          <label for="academic-degree">Studijų pakopa*</label>
+          <select name="academicDegree" id="academic-degree" required>
             <option value="profesinis-bakalauras">Profesinis bakalauras</option>
           </select>
   `;
@@ -124,15 +156,16 @@ function changeEducation() {
     let div = document.createElement("div");
     div.id = "education-additional-container";
     div.innerHTML = `
-          <label for="qualifications">Laipsnis</label>
-          <select name="qualifications" id="qualifications" required>
+          <label for="academic-degree">Studijų pakopa*</label>
+          <select name="academicDegree" id="academic-degree" required>
             <option value="bakalauras">Bakalauras</option>
             <option value="magistras">Magistras</option>
             <option value="daktaras">Daktaras</option>
+            <option value="daktaras">Habilituotas daktaras</option>
           </select>
 
-          <label for="degree">Mokslo laipsnis</label>
-          <input type="text" name="degree" id="degree" placeholder="Mokslų daktaras" />
+          <label for="position">Pareigos</label>
+          <input type="text" name="position" id="position" placeholder="Mokslo darbuotojas" />
   `;
     container.appendChild(div);
   }
