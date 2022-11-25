@@ -15,7 +15,7 @@
     <div class="page hidden">
       <div class="info">
         <h1>Pagrindinė informacija</h1>
-        <div id="general-information">
+        <div class="form-container" id="general-information">
           <label for="firstname">Vardas*</label>
           <input type="text" name="firstname" id="firstname" required placeholder="Vardenis" />
           <label for="middlename">Antrasis vardas</label>
@@ -27,7 +27,7 @@
           <label for="asmens-kodas">Asmens kodas*</label>
           <input type="text" pattern="^[12345]\d{2}(1[012]|0[123456789])(3[01]|[012][123456789])\d{4}$"
             name="asmensKodas" id="asmens-kodas" required placeholder="50101011234" />
-          <label for="address">Adresas</label>
+          <label for="address">Adresas*</label>
           <input type="text" name="address" id="address" required placeholder="Didlaukio g. 47" />
         </div>
       </div>
@@ -36,7 +36,7 @@
     <div class="page hidden">
       <div class="info">
         <h1>Kontaktinė informacija</h1>
-        <div id="contact-information">
+        <div class="form-container" id="contact-information">
           <label for="phone-number">Telefono numeris*</label>
           <input type="text" pattern="^(86|\+?3706)\d{7}$" name="phoneNumber" id="phone-number" required
             placeholder="+37061033399" />
@@ -61,7 +61,7 @@
     <div class="page hidden">
       <div class="info">
         <h1>Išsilavinimas</h1>
-        <div id="education">
+        <div class="form-container" id="education">
           <label for="education-level">Išsilavinimo lygis*</label>
           <select onchange="changeEducation()" name="educationLevel" id="education-level" required>
             <option value="pagrindinis">Pagrindinis</option>
@@ -85,7 +85,7 @@
     <div class="page hidden">
       <div class="info">
         <h1>Šeiminė padėtis</h1>
-        <div id="family-status">
+        <div class="form-container" id="family-status">
           <div id="marital-container">
             <label for="marital-status">Vedybinė padėtis*</label>
             <select onchange="changeMaritalStatus()" name="maritalStatus" id="marital-status" required>
@@ -94,9 +94,11 @@
               <option value="divorced">Išsiskyręs(-usi)</option>
             </select>
           </div>
-          <h2>Vaikai</h2>
-          <div id="kid-container"></div>
-          <button id="add-kid" type="button" onclick="changeKids(this)">Pridėti</button>
+          <div class="kids-section-container">
+            <h2>Vaikai</h2>
+            <div id="kid-container"></div>
+            <button id="add-kid" type="button" onclick="changeKids(this)">Pridėti</button>
+          </div>
         </div>
       </div>
     </div>
@@ -104,7 +106,7 @@
     <div class="page hidden">
       <div class="info">
         <h1>Darbas</h1>
-        <div id="work-related">
+        <div class="form-container" id="work-related">
           <div id="work-status-container">
             <label for="work-status">Profesinė padėtis</label>
             <select onchange="changeWorkStatus()" name="workStatus" id="work-status">

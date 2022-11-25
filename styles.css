@@ -5,7 +5,7 @@
 }
 
 :root {
-  --light-text: rgb(236, 236, 236);
+  --light-text: rgb(246, 246, 246);
   --page-background-color: #2b2a33;
   --form-background-color: #2f2c38;
 
@@ -15,17 +15,17 @@
 }
 
 body {
-  color: var(--light-text);
+  color: black;
   margin: var(--small-unit);
-  background-color: var(--page-background-color);
+  background-color: white;
   padding: 0;
 }
 
 .main-container {
   display: grid;
 
-  border: 1px solid black;
-  background-color: var(--form-background-color);
+  border: 1px solid grey;
+  background-color: var(--light-text);
 
   padding: var(--unit);
   margin: auto;
@@ -45,7 +45,7 @@ body {
 }
 
 .kid {
-  border: 1px solid black;
+  border: 1px solid grey;
   padding: 1rem;
 }
 
@@ -108,8 +108,12 @@ select {
   margin-bottom: 1rem;
 }
 
-input:required {
+input:valid {
   border: 2px solid green;
+}
+
+input:placeholder-shown {
+  border: 2px solid grey;
 }
 
 input:invalid {
@@ -118,4 +122,22 @@ input:invalid {
 
 .hidden {
   display: none;
+}
+
+.submit-buttom {
+  border: 2px solid grey !important;
+}
+
+@media (min-width: 700px) {
+  .form-container,
+  #education-additional-container,
+  #kid-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #education-additional-container,
+  #marital-container,
+  .kids-section-container {
+    grid-column: span 2;
+  }
 }

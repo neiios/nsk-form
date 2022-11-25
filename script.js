@@ -88,14 +88,16 @@ function changeKids(button) {
     div.classList.add("kid");
     div.innerHTML = `
           <label for="${div.id}-name">Vaiko vardas</label>
-          <input type="text" name="${div.id}Name" id="${div.id}-name" required />
+          <input type="text" name="${div.id}Name" placeholder="James" id="${div.id}-name" required />
           <label for="${div.id}-lastname">Vaiko pavardė</label>
-          <input type="text" name="${div.id}Lastname" id="${div.id}-lastname" required />
-          <button type="button" class="kill-kid" onclick="changeKids(this)">Ištrinti</button>
+          <input type="text" name="${div.id}Lastname" placeholder="Jameson" id="${div.id}-lastname" required />
+          <div> 
+            <button type="button" class="kill-kid" onclick="changeKids(this)">Ištrinti</button>
+          </div>
 `;
     container.appendChild(div);
   } else if (button.classList.contains("kill-kid")) {
-    const el = button.parentElement;
+    const el = button.parentElement.parentElement;
     el.remove();
   }
 }
@@ -250,7 +252,7 @@ function createPages() {
     if (page.querySelector("#work-related") != null) {
       div.innerHTML = `
           <button type="button" onclick="previousPage()">Atgal</button>
-          <input type="submit" value="Pateikti" class="submit-button" />
+          <button type="submit" class="submit-button">Pateikti</button>
   `;
     } else if (page.querySelector("#general-information") != null) {
       div.innerHTML = `
